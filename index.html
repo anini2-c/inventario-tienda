@@ -78,6 +78,7 @@
             <th>Cantidad</th>
             <th>Precio</th> 
             <th>Vender</th>
+            <th>+Stock</th>
             <th>Eliminar</th>
         </tr>
     </thead>
@@ -102,6 +103,7 @@ function mostrar() {
             <td>${item.cantidad}</td>
             <td>$${item.precio}</td>
             <td><button onclick="vender(${index})">Vender</button></td>
+            <td><button onclick="rellenar(${index})">+Stock</button></td>
             <td><button onclick="eliminar(${index})">X</button></td>
         </tr>
         `;
@@ -142,8 +144,15 @@ function vender(index) {
         alert("Ya no hay stock");
     }
 }
-        
-mostrar();
+ function rellenar(index) {
+     let cantidadExtra = ptompt("¿Cuanto quieres agregar?");
+     if (cantidadExtra !== null && cantidadExtra !== "") {
+        inventario[index].cantidad =
+        parseInt(inventario[index].cantidad) + parseInt(cantidadExtra);
+         guardar();
+         mostrar();
+     }
+ }
 </script>
 
 </body>
