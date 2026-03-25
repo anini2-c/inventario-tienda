@@ -146,9 +146,11 @@ function vender(index) {
 }
  function rellenar(index) {
      let cantidadExtra = prompt("¿Cuanto quieres agregar?");
+     
      if (cantidadExtra !== null && cantidadExtra !== "") {
         inventario[index].cantidad =
         parseInt(inventario[index].cantidad) + parseInt(cantidadExtra);
+         
          guardar();
          mostrar();
      }
