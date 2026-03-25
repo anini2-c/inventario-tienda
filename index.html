@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventario PRO</title>
+</head>
+<body>
+
+<h1>Inventario de la tienda</h1>
+
+<input type="text" id="producto" placeholder="Producto">
+<input type="number" id="cantidad" placeholder="Cantidad">
+<input type="number" id="precio" placeholder="Precio">
+<button onclick="agregarProducto()">Agregar</button>
+
+<br><br>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody id="tabla"></tbody>
+</table>
+
+<script>
+let inventario = JSON.parse(localStorage.getItem("inventario")) || [];
+
+function guardar() {
+    localStorage.setItem("inventario", JSON.stringify(inventario));
+}
+
+function mostrar() {
+    let tabla = document.getElementById("tabla");
+    tabla.innerHTML = "";
+
+    inventario.forEach((item, index) => {
+        tabla.innerHTML += `
+        <tr>
+            <td>${item.producto}</td>
+            <td>${item.cantidad}</td>
+            <td>$${item.precio}</td>
+            <td><button onclick="eliminar(${index})">X</button></td>
+        </tr>
+        `;
+    });
+}
+
+function agregarProducto() {
+    let producto = document.getElementById("producto").value;
+    let cantidad = document.getElementById("cantidad").value;
+    let precio = document.getElementById("precio").value;
+
+    if (producto === "" || cantidad === "" || precio === "") {
+        alert("Llena todos los campos");
+        return;
+    }
+
+    inventario.push({ producto, cantidad, precio });
+    guardar();
+    mostrar();
+
+    document.getElementById("producto").value = "";
+    document.getElementById("cantidad").value = "";
+    document.getElementById("precio").value = "";
+}
+
+function eliminar(index) {
+    inventario.splice(index, 1);
+    guardar();
+    mostrar();
+}
+
+mostrar();
+</script>
+
+</body>
+</html>
